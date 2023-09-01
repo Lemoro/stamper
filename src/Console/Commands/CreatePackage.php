@@ -113,7 +113,7 @@ class CreatePackage extends Command
         preg_match('/ExampleCommand::class,([\s\S]*)]\)/U', $f, $matches);
 
         if (isset($matches[1])) {
-            $f = str_replace($matches[1], '\n', $f);
+            $f = str_replace($matches[1], "\n", $f);
         }
         $f = str_replace('example@test.tmp', $this->email, $f);
         $f = str_replace('/ExampleCommand::class,([\s\S]*)]\)/U', '', $f);
