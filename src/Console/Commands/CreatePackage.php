@@ -183,9 +183,9 @@ class CreatePackage extends Command
     {
         $path = $this->newPackagePath;
 
-        if ( ! File::exists(base_path($path))) {
+        if ( ! File::exists($path)) {
 
-            File::makeDirectory(base_path($path), 0755, true);
+            File::makeDirectory($path, 0755, true);
 
             $this->info("Создана папка -" . $path);
 
