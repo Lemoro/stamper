@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class PageStamperController extends Controller
+class StamperMainController extends Controller
 {
 
 
