@@ -7,17 +7,6 @@ use Illuminate\Support\ServiceProvider;
 
 class StamperServiceProvider extends ServiceProvider
 {
-
-    private $copyList = [
-
-        'migrations'  => 'migrations',
-        'Controllers' => 'Http/Controllers/Stamper',
-        'views'       => 'views/stamper',
-        'js'          => 'js/stamper',
-    ];
-
-
-
     /**
      * Register services.
      *
@@ -47,28 +36,40 @@ class StamperServiceProvider extends ServiceProvider
         }
 
         $this->loadViewsFrom($pathPackege . 'resources/views', 'stamper');
-
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         //$this->loadRoutesFrom(__DIR__.'/../routes/stamper.php');
 
-        foreach ($this->copyList as $key => $pathTo) {
+        $this->publishFiles($pathPackege);
+    }
 
-            $pathFrom = $pathPackege.'copy/' . $key;
+    private function publishFiles($pathPackege)
+    {
+        $copyList = $this->getListPublish();
+
+        foreach ($copyList as $key => $pathTo) {
+
+            $pathFrom = $pathPackege . 'copy/' . $key;
 
             if (file_exists($pathFrom)) {
                 $this->publishes([
-                    $pathFrom => database_path($pathTo),
-                ], 'public');
+                    $pathFrom => $pathTo,
+                ], 'stamper');
             }
 
         }
 
+    }
 
-        /*
-    $this->publishes([
-    __DIR__ . '/../copy/Controllers/Stamper' => app_path('Http/Controllers'),
-    ], 'public');
-     */
-
+    private function getListPublish()
+    {
+        return [
+            // 'migrations' => database_path('migrations'),
+            // 'Controllers' => app_path('Http/Controllers/UpFile'),
+            // 'views' => resource_path('views'),
+            // 'js'    => public_path('up-file/js'),
+            // 'css'   => public_path('up-file/css'),
+            // 'image' => public_path('up-file/image'),
+        ];
     }
 
 }
